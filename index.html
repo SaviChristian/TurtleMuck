@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    canvas {
+      border: 1px solid #d3d3d3;
+      background-color: #ADD8E6;
+      background-image: url('6.jpeg');
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+
+    }
+
+    #start-screen {
+      width: 700px;
+      height: 700px;
+      /*       margin: 0 auto;
+      /* Center the start screen horizontally */
+      */ position: absolute;
+      top: 0;
+      left: 0;
+      background-color: #ADD8E6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: white;
+      text-shadow: 2px 2px #333;
+    }
+
+    #play-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px 32px;
+      font-size: 1.5em;
+      border: none;
+      cursor: pointer;
+      box-shadow: 2px 2px #333;
+      transition: 0.3s;
+      margin-top: 20px;
+    }
+
+    #play-button:hover {
+      background-color: #ADD8E6;
+    }
+
+    #last-score {
+      font-size: 2em;
+      color: white;
+      text-shadow: 2px 2px #333;
+      margin-top: 20px;
+    }
+
+    #high-score {
+      font-size: 2em;
+      color: white;
+      text-shadow: 2px 2px #333;
+      margin-top: 20px;
+    }
+
+    #sdg-message {
+      font-size: 1em;
+      color: black;
+      margin-bottom: 10px;
+      margin-right: 40px;
+      margin-left: 40px;
+      color: black;
+
+      align-self: 'center';
+
+    }
+  </style>
+</head>
+
+<body>
+  <div id="start-screen">
+    <h1>Turtle Muck</h1>
+    <div id="sdg-message"></div>
+    <div id="last-score"></div>
+    <div id="high-score"></div>
+
+
+    <button id="play-button">Play</button>
+  </div>
+
+  <script>
+    var message = localStorage.getItem("message");
+    if (message) {
+      document.getElementById("sdg-message").innerHTML = "" + message;
+    } else {
+      document.getElementById("sdg-message").innerHTML = "Welcome";
+    }
+    var lastScore = localStorage.getItem("lastScore");
+    if (lastScore) {
+      document.getElementById("last-score").innerHTML = "Last game's score: " + lastScore;
+    }
+    var highScore = localStorage.getItem("highScore");
+    if (highScore) {
+      document.getElementById("high-score").innerHTML = "High Score: " + highScore;
+    }
+
+    // Add an event listener to the play button to start the game
+    var playButton = document.getElementById("play-button");
+    playButton.addEventListener("click", function () {
+      var startScreen = document.getElementById("start-screen");
+      startScreen.style.display = "none";
+      startGame();
+    });
+
+    function startGame() {
+
+      // // myGamePiece = new component(30, 30, "red", 225, 225);
+      // plastic = new trash(60, 60, "trash.gif", Math.random() * 1420 -10, 20, "image");
+      myGamePiece = new component(120, 120, "turtle.gif", 320, 600, "image");
+      plastic = new trash(50, 50, "3.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+      bottle = new trash(40, 40, "1.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+      oil = new trash(60, 60, "2.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+      plastic2 = new trash(50, 50, "3.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+      bottle2 = new trash(40, 40, "1.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+      oil2 = new trash(60, 60, "2.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+      tire = new trash(60, 60, "4.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+      tire2 = new trash(60, 60, "4.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
+
+
+
+      myScore = new text("30px", "Consolas", "black", 280, 40, "text");
+      myGameArea.start();
+
+
+
+      // var touched = false;
+      // var counter = 0;
+      // while(touched) {
+      //   trash = new component(30,30,random(),random())
+      // }
+    }
+    function checkCollision() {
+
+      if (myGamePiece.x < plastic.x + plastic.width  &&
+        myGamePiece.x + 80  > plastic.x &&
+        myGamePiece.y < plastic.y + plastic.height  &&
+        myGamePiece.y + 40  > plastic.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        highScore = localStorage.getItem('highScore');
+        localStorage.setItem("message", "At least 14 million tons of plastic end up in the ocean every year, and plastic makes up 80% of all marine debris found from surface waters to deep-sea sediments. Marine species ingest or are entangled by plastic debris, which causes severe injuries and death.");
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+      if (myGamePiece.x < tire.x + 40  &&
+        myGamePiece.x + 80  > tire.x &&
+        myGamePiece.y < tire.y + 20  &&
+        myGamePiece.y + 40  > tire.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        highScore = localStorage.getItem('highScore');
+        localStorage.setItem("message", "Dumped tires destroy sea grasses and corals (bio-physio impacts). Some countries like Indonesia and the Philippines are still dumping tires into their seas, while others like the United States and France are slowly removing them.");
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+      if (myGamePiece.x < tire2.x + 40  &&
+        myGamePiece.x + 80  > tire2.x &&
+        myGamePiece.y < tire2.y + 20  &&
+        myGamePiece.y + 40  > tire2.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        highScore = localStorage.getItem('highScore');
+        localStorage.setItem("message", "Dumped tires destroy sea grasses and corals (bio-physio impacts). Some countries like Indonesia and the Philippines are still dumping tires into their seas, while others like the United States and France are slowly removing them.");
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+
+
+      if (myGamePiece.x < plastic2.x + 20  &&
+        myGamePiece.x + 80  > plastic2.x &&
+        myGamePiece.y < plastic2.y + 40  &&
+        myGamePiece.y + 40  > plastic2.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("message", "At least 14 million tons of plastic end up in the ocean every year, and plastic makes up 80% of all marine debris found from surface waters to deep-sea sediments. Marine species ingest or are entangled by plastic debris, which causes severe injuries and death.");
+        localStorage.setItem("lastScore", score);
+        highScore = localStorage.getItem('highScore');
+
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+
+
+      if (myGamePiece.x < oil.x + 30  &&
+        myGamePiece.x + 80  > oil.x &&
+        myGamePiece.y < oil.y + 30  &&
+        myGamePiece.y + 40  > oil.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        localStorage.setItem("message", "oil spills can be very harmful to marine birds, sea turtles and mammals, and also can harm fish and shellfish. Oil destroys the insulating ability of fur-bearing mammals, such as sea otters, and the water-repelling abilities of a bird's feathers, exposing them to the harsh elements.");
+        highScore = localStorage.getItem('highScore');
+
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+
+
+      if (myGamePiece.x < oil2.x + 30  &&
+        myGamePiece.x + 80  > oil2.x &&
+        myGamePiece.y < oil2.y + 30 &&
+        myGamePiece.y + 40  > oil2.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        highScore = localStorage.getItem('highScore');
+        localStorage.setItem("message", "oil spills can be very harmful to marine birds, sea turtles and mammals, and also can harm fish and shellfish. Oil destroys the insulating ability of fur-bearing mammals, such as sea otters, and the water-repelling abilities of a bird's feathers, exposing them to the harsh elements.");
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+
+
+      if (myGamePiece.x < bottle.x + 10  &&
+        myGamePiece.x + 80  > bottle.x &&
+        myGamePiece.y < bottle.y + 30  &&
+        myGamePiece.y + 40  > bottle.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        highScore = localStorage.getItem('highScore');
+        localStorage.setItem("message", "More than 8 million tons of plastic bottles in the sea each year and it is estimated that in the year 2050 there will be more plastic than fishes in the sea.");
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+
+
+      if (myGamePiece.x < bottle2.x + 10  &&
+        myGamePiece.x + 80  > bottle2.x &&
+        myGamePiece.y < bottle2.y + 30  &&
+        myGamePiece.y + 40  > bottle2.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        highScore = localStorage.getItem('highScore');
+        localStorage.setItem("message", "More than 8 million tons of plastic bottles in the sea each year and it is estimated that in the year 2050 there will be more plastic than fishes in the sea.");
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+    }
+
+
+
+    var myGameArea = {
+      canvas: document.createElement("canvas"),
+      start: function () {
+        this.canvas.width = 700;
+        this.canvas.height = 700;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('keydown', function (e) {
+          e.preventDefault();
+          myGameArea.keys = (myGameArea.keys || []);
+          myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        window.addEventListener('keyup', function (e) {
+          myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+
+      },
+      stop: function () {
+        clearInterval(this.interval);
+      },
+      clear: function () {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      }
+
+
+    }
+    function text(width, height, color, x, y, type) {
+      this.type = type;
+      this.width = width;
+      this.height = height;
+      this.speedX = 0;
+      this.speedY = 0;
+      this.x = x;
+      this.y = y;
+      this.update = function () {
+        ctx = myGameArea.context;
+        if (type == "text") {
+          ctx.font = this.width + " " + this.height;
+          ctx.fillStyle = color;
+          ctx.fillText(this.text, this.x, this.y);
+        } else {
+          ctx.fillStyle = color;
+          ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+      }
+      this.newPos = function () {
+        this.x += this.speedX;
+        this.y += this.speedY
+      }
+    }
+
+    function trash(width, height, color, x, y, type, speed) {
+      this.type = type;
+      if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+      }
+      this.width = width;
+      this.height = height;
+      this.speedX = 0;
+      this.speedY = speed;
+      this.x = x;
+      this.y = y;
+      this.update = function () {
+        ctx = myGameArea.context;
+        if (type == "text") {
+          ctx.font = this.width + " " + this.height;
+          ctx.fillStyle = color;
+          ctx.fillText(this.text, this.x, this.y);
+        }
+        else if (type == "image") {
+          ctx.drawImage(this.image,
+            this.x,
+            this.y,
+            this.width, this.height);
+        } else {
+          ctx.fillStyle = color;
+          ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+      }
+      this.newPos = function () {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y > 750) {
+          this.y = -20;
+          this.x = Math.random() * 640 + 20;
+          this.speedY = Math.random() * 1.5 + 1;
+        }
+      }
+    }
+
+
+    function component(width, height, color, x, y, type) {
+      this.type = type;
+      if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+      }
+      this.width = width;
+      this.height = height;
+      this.speedy = 0;
+      this.speedx = 0;
+      this.x = x;
+      this.y = y;
+
+
+      this.update = function () {
+        ctx = myGameArea.context;
+
+        // ctx.save();
+        // ctx.translate(this.x, this.y);
+        // ctx.rotate(this.angle);
+        // ctx.fillStyle = color;
+        // ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+        // ctx.restore();  
+        if (type == "image") {
+          ctx.drawImage(this.image,
+            this.x,
+            this.y,
+            this.width, this.height);
+        } else {
+          ctx.fillStyle = color;
+          ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+
+      }
+      this.newPos = function () {
+        this.x -= this.speedx
+        this.y -= this.speedy
+        this.hitBottom();
+        this.hitTop();
+        this.hitLeft();
+        this.hitRight();
+        // checkCollision();
+
+      }
+      this.hitBottom = function () {
+        var rockbottom = 620;
+        if (this.y > rockbottom) {
+          this.y = rockbottom;
+          myGamePiece.speedy *= -1;
+        }
+      }
+      this.hitTop = function () {
+        var top = -30;
+        if (this.y < top) {
+          this.y = top;
+          myGamePiece.speedy *= -1;
+        }
+      }
+      this.hitLeft = function () {
+        var left = -30;
+        if (this.x < left) {
+          this.x = left;
+          myGamePiece.speedx *= -1;
+        }
+      }
+      this.hitRight = function () {
+        var right = 640;
+        if (this.x > right) {
+          this.x = right;
+          myGamePiece.speedx *= -1;
+        }
+      }
+    }
+
+    function updateGameArea() {
+      myGameArea.clear();
+      myGameArea.frameNo += 1;
+
+      myGamePiece.moveAngle = 0;
+      myGamePiece.speed = 0;
+      if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece.speedx = 1.5;}
+      if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece.speedx = -1.5;}
+      if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece.speedy = 1.5;}
+      if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece.speedy = -1.5;}
+      myGamePiece.newPos();
+
+      myGamePiece.update();
+      myScore.text = "SCORE: " + myGameArea.frameNo;
+      myScore.update();
+
+      plastic.update();
+      plastic.newPos();
+      oil.update();
+      oil.newPos();
+      bottle.update();
+      bottle.newPos();
+      plastic2.update();
+      plastic2.newPos();
+      oil2.update();
+      oil2.newPos();
+      bottle2.update();
+      bottle2.newPos();
+      tire2.update();
+      tire2.newPos();
+      tire.update();
+      tire.newPos();
+      checkCollision();
+    }
+
+
+
+  </script>
+
+
+</body>
+
+</html>
