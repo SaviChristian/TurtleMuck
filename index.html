@@ -65,15 +65,23 @@
       margin-top: 20px;
     }
 
+ 
+
     #sdg-message {
-      font-size: 1em;
+      font-size: 20px;
       color: black;
       margin-bottom: 10px;
       margin-right: 40px;
       margin-left: 40px;
       color: black;
+      align-items: center;
+      text-align: center;
+      font-style: italic;
+      border-radius: 2px;
+      align-self: center;
 
-      align-self: 'center';
+
+
 
     }
   </style>
@@ -81,8 +89,10 @@
 
 <body>
   <div id="start-screen">
-    <h1>Turtle Muck</h1>
+    <h1>Turtle Run</h1>
+
     <div id="sdg-message"></div>
+    <a href="https://www.turtle-foundation.org/en/">Donate to help the turtles!</a>
     <div id="last-score"></div>
     <div id="high-score"></div>
 
@@ -91,11 +101,12 @@
   </div>
 
   <script>
+
     var message = localStorage.getItem("message");
     if (message) {
       document.getElementById("sdg-message").innerHTML = "" + message;
     } else {
-      document.getElementById("sdg-message").innerHTML = "Welcome";
+      document.getElementById("sdg-message").innerHTML = "Welcome to Turtle Run,  a game that aims to show the deadly conditions under the water. Donate to help here";
     }
     var lastScore = localStorage.getItem("lastScore");
     if (lastScore) {
@@ -116,8 +127,7 @@
 
     function startGame() {
 
-      // // myGamePiece = new component(30, 30, "red", 225, 225);
-      // plastic = new trash(60, 60, "trash.gif", Math.random() * 1420 -10, 20, "image");
+      
       myGamePiece = new component(120, 120, "turtle.gif", 320, 600, "image");
       plastic = new trash(50, 50, "3.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
       bottle = new trash(40, 40, "1.png", Math.random() * 640 + 20, -20, "image", Math.random() * 1.5 + 1);
@@ -132,28 +142,24 @@
 
       myScore = new text("30px", "Consolas", "black", 280, 40, "text");
       myGameArea.start();
-
-
-
-      // var touched = false;
-      // var counter = 0;
-      // while(touched) {
-      //   trash = new component(30,30,random(),random())
-      // }
     }
+
+
+
+     
     function checkCollision() {
 
-      if (myGamePiece.x < plastic.x + plastic.width  &&
-        myGamePiece.x + 80  > plastic.x &&
-        myGamePiece.y < plastic.y + plastic.height  &&
-        myGamePiece.y + 40  > plastic.y) {
+      if (myGamePiece.x < plastic.x + plastic.width &&
+        myGamePiece.x + 80 > plastic.x &&
+        myGamePiece.y < plastic.y + plastic.height &&
+        myGamePiece.y + 40 > plastic.y) {
 
         // Redirect the player to the start screen with the score as a query parameter
         window.location.href = "index.html";
         var score = myGameArea.frameNo; // function that returns the current score
         localStorage.setItem("lastScore", score);
         highScore = localStorage.getItem('highScore');
-        localStorage.setItem("message", "At least 14 million tons of plastic end up in the ocean every year, and plastic makes up 80% of all marine debris found from surface waters to deep-sea sediments. Marine species ingest or are entangled by plastic debris, which causes severe injuries and death.");
+        localStorage.setItem("message", "At least 14 million tons of plastic end up in the ocean every year, and plastic makes up 80% of all marine debris found from surface waters to deep-sea sediments. Marine species can eat or get trapped by plastic debris, which causes severe injuries and death.");
         if (highScore) {
           if (myGameArea.frameNo > localStorage.getItem('highScore')) {
             localStorage.setItem("highScore", myGameArea.frameNo);
@@ -163,17 +169,17 @@
         }
 
       }
-      if (myGamePiece.x < tire.x + 40  &&
-        myGamePiece.x + 80  > tire.x &&
-        myGamePiece.y < tire.y + 20  &&
-        myGamePiece.y + 40  > tire.y) {
+      if (myGamePiece.x < tire.x + 40 &&
+        myGamePiece.x + 80 > tire.x &&
+        myGamePiece.y < tire.y + 20 &&
+        myGamePiece.y + 40 > tire.y) {
 
         // Redirect the player to the start screen with the score as a query parameter
         window.location.href = "index.html";
         var score = myGameArea.frameNo; // function that returns the current score
         localStorage.setItem("lastScore", score);
         highScore = localStorage.getItem('highScore');
-        localStorage.setItem("message", "Dumped tires destroy sea grasses and corals (bio-physio impacts). Some countries like Indonesia and the Philippines are still dumping tires into their seas, while others like the United States and France are slowly removing them.");
+        localStorage.setItem("message", "Dumped tires destroy sea grasses and corals, which can damage a turtles diet. Some countries like Indonesia and the Philippines are still dumping tires into their seas, while others like the United States and France are slowly removing them. Turtles can also get stuck in these tires and could get hurt.");
         if (highScore) {
           if (myGameArea.frameNo > localStorage.getItem('highScore')) {
             localStorage.setItem("highScore", myGameArea.frameNo);
@@ -183,40 +189,17 @@
         }
 
       }
-      if (myGamePiece.x < tire2.x + 40  &&
-        myGamePiece.x + 80  > tire2.x &&
-        myGamePiece.y < tire2.y + 20  &&
-        myGamePiece.y + 40  > tire2.y) {
+      if (myGamePiece.x < tire2.x + 40 &&
+        myGamePiece.x + 80 > tire2.x &&
+        myGamePiece.y < tire2.y + 20 &&
+        myGamePiece.y + 40 > tire2.y) {
 
         // Redirect the player to the start screen with the score as a query parameter
         window.location.href = "index.html";
         var score = myGameArea.frameNo; // function that returns the current score
         localStorage.setItem("lastScore", score);
         highScore = localStorage.getItem('highScore');
-        localStorage.setItem("message", "Dumped tires destroy sea grasses and corals (bio-physio impacts). Some countries like Indonesia and the Philippines are still dumping tires into their seas, while others like the United States and France are slowly removing them.");
-        if (highScore) {
-          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
-            localStorage.setItem("highScore", myGameArea.frameNo);
-          }
-        } else {
-          localStorage.setItem("highScore", myGameArea.frameNo);
-        }
-
-      }
-
-
-      if (myGamePiece.x < plastic2.x + 20  &&
-        myGamePiece.x + 80  > plastic2.x &&
-        myGamePiece.y < plastic2.y + 40  &&
-        myGamePiece.y + 40  > plastic2.y) {
-
-        // Redirect the player to the start screen with the score as a query parameter
-        window.location.href = "index.html";
-        var score = myGameArea.frameNo; // function that returns the current score
-        localStorage.setItem("message", "At least 14 million tons of plastic end up in the ocean every year, and plastic makes up 80% of all marine debris found from surface waters to deep-sea sediments. Marine species ingest or are entangled by plastic debris, which causes severe injuries and death.");
-        localStorage.setItem("lastScore", score);
-        highScore = localStorage.getItem('highScore');
-
+        localStorage.setItem("message", "Dumped tires destroy sea grasses and corals, which can damage a turtles diet. Some countries like Indonesia and the Philippines are still dumping tires into their seas, while others like the United States and France are slowly removing them. Turtles can also get stuck in these tires and could get hurt.");
         if (highScore) {
           if (myGameArea.frameNo > localStorage.getItem('highScore')) {
             localStorage.setItem("highScore", myGameArea.frameNo);
@@ -228,16 +211,16 @@
       }
 
 
-      if (myGamePiece.x < oil.x + 30  &&
-        myGamePiece.x + 80  > oil.x &&
-        myGamePiece.y < oil.y + 30  &&
-        myGamePiece.y + 40  > oil.y) {
+      if (myGamePiece.x < plastic2.x + 20 &&
+        myGamePiece.x + 80 > plastic2.x &&
+        myGamePiece.y < plastic2.y + 40 &&
+        myGamePiece.y + 40 > plastic2.y) {
 
         // Redirect the player to the start screen with the score as a query parameter
         window.location.href = "index.html";
         var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("message", "At least 14 million tons of plastic end up in the ocean every year, and plastic makes up 80% of all marine debris found from surface waters to deep-sea sediments. Marine species can eat or get trapped by plastic debris, which causes severe injuries and death.");
         localStorage.setItem("lastScore", score);
-        localStorage.setItem("message", "oil spills can be very harmful to marine birds, sea turtles and mammals, and also can harm fish and shellfish. Oil destroys the insulating ability of fur-bearing mammals, such as sea otters, and the water-repelling abilities of a bird's feathers, exposing them to the harsh elements.");
         highScore = localStorage.getItem('highScore');
 
         if (highScore) {
@@ -251,17 +234,40 @@
       }
 
 
-      if (myGamePiece.x < oil2.x + 30  &&
-        myGamePiece.x + 80  > oil2.x &&
+      if (myGamePiece.x < oil.x + 30 &&
+        myGamePiece.x + 80 > oil.x &&
+        myGamePiece.y < oil.y + 30 &&
+        myGamePiece.y + 40 > oil.y) {
+
+        // Redirect the player to the start screen with the score as a query parameter
+        window.location.href = "index.html";
+        var score = myGameArea.frameNo; // function that returns the current score
+        localStorage.setItem("lastScore", score);
+        localStorage.setItem("message", "oil spills can be very harmful to marine birds, sea turtles and mammals, and also can harm fish and shellfish. Oil makes it hard for mammals (like turtles) to protect themselves, and exposes them to the harsh elements. If a mammal consumes oil, it could also damage their organs and lead to death.");
+        highScore = localStorage.getItem('highScore');
+
+        if (highScore) {
+          if (myGameArea.frameNo > localStorage.getItem('highScore')) {
+            localStorage.setItem("highScore", myGameArea.frameNo);
+          }
+        } else {
+          localStorage.setItem("highScore", myGameArea.frameNo);
+        }
+
+      }
+
+
+      if (myGamePiece.x < oil2.x + 30 &&
+        myGamePiece.x + 80 > oil2.x &&
         myGamePiece.y < oil2.y + 30 &&
-        myGamePiece.y + 40  > oil2.y) {
+        myGamePiece.y + 40 > oil2.y) {
 
         // Redirect the player to the start screen with the score as a query parameter
         window.location.href = "index.html";
         var score = myGameArea.frameNo; // function that returns the current score
         localStorage.setItem("lastScore", score);
         highScore = localStorage.getItem('highScore');
-        localStorage.setItem("message", "oil spills can be very harmful to marine birds, sea turtles and mammals, and also can harm fish and shellfish. Oil destroys the insulating ability of fur-bearing mammals, such as sea otters, and the water-repelling abilities of a bird's feathers, exposing them to the harsh elements.");
+        localStorage.setItem("message", "oil spills can be very harmful to marine birds, sea turtles and mammals, and also can harm fish and shellfish. Oil makes it hard for mammals (like turtles) to protect themselves, and exposes them to the harsh elements. If a mammal consumes oil, it could also damage their organs and lead to death.");
         if (highScore) {
           if (myGameArea.frameNo > localStorage.getItem('highScore')) {
             localStorage.setItem("highScore", myGameArea.frameNo);
@@ -273,17 +279,17 @@
       }
 
 
-      if (myGamePiece.x < bottle.x + 10  &&
-        myGamePiece.x + 80  > bottle.x &&
-        myGamePiece.y < bottle.y + 30  &&
-        myGamePiece.y + 40  > bottle.y) {
+      if (myGamePiece.x < bottle.x + 10 &&
+        myGamePiece.x + 80 > bottle.x &&
+        myGamePiece.y < bottle.y + 30 &&
+        myGamePiece.y + 40 > bottle.y) {
 
         // Redirect the player to the start screen with the score as a query parameter
         window.location.href = "index.html";
         var score = myGameArea.frameNo; // function that returns the current score
         localStorage.setItem("lastScore", score);
         highScore = localStorage.getItem('highScore');
-        localStorage.setItem("message", "More than 8 million tons of plastic bottles in the sea each year and it is estimated that in the year 2050 there will be more plastic than fishes in the sea.");
+        localStorage.setItem("message", "More than 8 million tons of plastic bottles in the sea each year and it is estimated that in the year 2050 there will be more plastic than fishes in the sea. Plastic bottles are dangerous as they can cut mammals, and could also be mistaken for food.");
         if (highScore) {
           if (myGameArea.frameNo > localStorage.getItem('highScore')) {
             localStorage.setItem("highScore", myGameArea.frameNo);
@@ -295,17 +301,17 @@
       }
 
 
-      if (myGamePiece.x < bottle2.x + 10  &&
-        myGamePiece.x + 80  > bottle2.x &&
-        myGamePiece.y < bottle2.y + 30  &&
-        myGamePiece.y + 40  > bottle2.y) {
+      if (myGamePiece.x < bottle2.x + 10 &&
+        myGamePiece.x + 80 > bottle2.x &&
+        myGamePiece.y < bottle2.y + 30 &&
+        myGamePiece.y + 40 > bottle2.y) {
 
         // Redirect the player to the start screen with the score as a query parameter
         window.location.href = "index.html";
         var score = myGameArea.frameNo; // function that returns the current score
         localStorage.setItem("lastScore", score);
         highScore = localStorage.getItem('highScore');
-        localStorage.setItem("message", "More than 8 million tons of plastic bottles in the sea each year and it is estimated that in the year 2050 there will be more plastic than fishes in the sea.");
+        localStorage.setItem("message", "More than 8 million tons of plastic bottles in the sea each year and it is estimated that in the year 2050 there will be more plastic than fishes in the sea. Plastic bottles are dangerous as they can cut mammals, and could also be mistaken for food.")  ;
         if (highScore) {
           if (myGameArea.frameNo > localStorage.getItem('highScore')) {
             localStorage.setItem("highScore", myGameArea.frameNo);
@@ -430,12 +436,7 @@
       this.update = function () {
         ctx = myGameArea.context;
 
-        // ctx.save();
-        // ctx.translate(this.x, this.y);
-        // ctx.rotate(this.angle);
-        // ctx.fillStyle = color;
-        // ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
-        // ctx.restore();  
+        
         if (type == "image") {
           ctx.drawImage(this.image,
             this.x,
